@@ -21,7 +21,7 @@ try:
         for (caseid, reporterid, proof, licenseplatepic) in cursor:
             print("Case id : ", caseid)
             print("Reporter id : ", reporterid)
-            image_list.append([case_id, licenseplatepic])
+            image_list.append([caseid, licenseplatepic])
 
         # Get neural network prediction
         for image in image_list:
