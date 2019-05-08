@@ -127,40 +127,45 @@ def writeLicensePlateCharsOnImage(imgOriginalScene, licPlate):
     cv2.putText(imgOriginalScene, licPlate.strChars, (ptLowerLeftTextOriginX, ptLowerLeftTextOriginY), intFontFace, fltFontScale, SCALAR_YELLOW, intFontThickness)
     print(licPlate.strChars)
 
+def recognize(image):
+    return licenseplatechars
 
-if __name__ == "__main__":
-    print(main('images/ZZX9483.jpg'))
+#DEV TESTING
+# if __name__ == "__main__":
+#     print(main('images/ZZX9483.jpg'))
     
-    # i = 0
-    # length = 0
-    # score = 0
-    # start = time.time()
-    # result = []
-    # count = 0
-    # os.chdir('Test_dataset')
-    # for f in os.listdir():
-    #     y_test,ext = os.path.splitext(f)
-    #     y_pred,_ = main(f)
-    #     length = length + len(y_test)
-    #     if len(y_test)<len(y_pred):
-    #         y_test = y_test + ' '*(len(y_pred)-len(y_test))
-    #         count = count + 1
-    #     else:
-    #         y_pred = y_pred + ' '*(len(y_test)-len(y_pred))
-    #         count = count + 1
-    #     y_test = np.array(list(str(y_test)))
-    #     y_pred = np.array(list(str(y_pred)))
-    #     print(y_test,' ',y_pred)
-    #     score = score + (y_test == y_pred).sum()
-    #     count = 0
-    #     for t in y_pred:
-    #         if t in y_test:
-    #             score = score + 1
-    #             count = count + 1
-    #     accuracy = (score*100)/length
-    #     new = 'Accuarcy at the '+str(i)+' th image '+f+ ' is :'+str(accuracy)
-    #     print(new,'\n','The count is: ',count)
-    #     result.append(result)
-    #     i = i + 1
-    # print('time taken :',time.time() - start)
-    # print(result)
+
+#ACCURACY TESTING
+# i = 0
+# length = 0
+# score = 0
+# start = time.time()
+# result = []
+# count = 0
+# os.chdir('Test_dataset')
+# for f in os.listdir():
+#     y_test,ext = os.path.splitext(f)
+#     y_pred,_ = main(f)
+#     length = length + len(y_test)
+#     if len(y_test)<len(y_pred):
+#         y_test = y_test + ' '*(len(y_pred)-len(y_test))
+#         count = count + 1
+#     else:
+#         y_pred = y_pred + ' '*(len(y_test)-len(y_pred))
+#         count = count + 1
+#     y_test = np.array(list(str(y_test)))
+#     y_pred = np.array(list(str(y_pred)))
+#     print(y_test,' ',y_pred)
+#     score = score + (y_test == y_pred).sum()
+#     count = 0
+#     for t in y_pred:
+#         if t in y_test:
+#             score = score + 1
+#             count = count + 1
+#     accuracy = (score*100)/length
+#     new = 'Accuarcy at the '+str(i)+' th image '+f+ ' is :'+str(accuracy)
+#     print(new,'\n','The count is: ',count)
+#     result.append(result)
+#     i = i + 1
+# print('time taken :',time.time() - start)
+# print(result)
