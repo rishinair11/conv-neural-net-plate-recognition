@@ -37,7 +37,7 @@ try:
                     print(platenumber)
 
                     # polling frequency for NN
-                    time(1)
+                    time.sleep(1)
 
                     # delete image to save storage
                     os.remove(path)
