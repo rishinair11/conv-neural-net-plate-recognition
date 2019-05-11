@@ -36,6 +36,9 @@ try:
                     platenumber = Start.recognize(path)
                     print(platenumber)
 
+                    # polling frequency for NN
+                    time(1)
+
                     # delete image to save storage
                     os.remove(path)
                     if platenumber == None:
