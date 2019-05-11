@@ -1,7 +1,9 @@
 import os
 import time
 import sys
-
+import requests
+import base64
+import json
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -127,45 +129,20 @@ def writeLicensePlateCharsOnImage(imgOriginalScene, licPlate):
     cv2.putText(imgOriginalScene, licPlate.strChars, (ptLowerLeftTextOriginX, ptLowerLeftTextOriginY), intFontFace, fltFontScale, SCALAR_YELLOW, intFontThickness)
     print(licPlate.strChars)
 
-def recognize(image):
-    return licenseplatechars
-
-#DEV TESTING
+# DEV TESTING
 # if __name__ == "__main__":
-#     print(main('images/ZZX9483.jpg'))
+#     print(main('Correct/IBN4014.jpg'))
+    
+def recognize(path):
     
 
-#ACCURACY TESTING
-# i = 0
-# length = 0
-# score = 0
-# start = time.time()
-# result = []
-# count = 0
-# os.chdir('Test_dataset')
-# for f in os.listdir():
-#     y_test,ext = os.path.splitext(f)
-#     y_pred,_ = main(f)
-#     length = length + len(y_test)
-#     if len(y_test)<len(y_pred):
-#         y_test = y_test + ' '*(len(y_pred)-len(y_test))
-#         count = count + 1
-#     else:
-#         y_pred = y_pred + ' '*(len(y_test)-len(y_pred))
-#         count = count + 1
-#     y_test = np.array(list(str(y_test)))
-#     y_pred = np.array(list(str(y_pred)))
-#     print(y_test,' ',y_pred)
-#     score = score + (y_test == y_pred).sum()
-#     count = 0
-#     for t in y_pred:
-#         if t in y_test:
-#             score = score + 1
-#             count = count + 1
-#     accuracy = (score*100)/length
-#     new = 'Accuarcy at the '+str(i)+' th image '+f+ ' is :'+str(accuracy)
-#     print(new,'\n','The count is: ',count)
-#     result.append(result)
-#     i = i + 1
-# print('time taken :',time.time() - start)
-# print(result)
+    SECRET_KEY = 'sk_d72bcb44e3f485e2f9601105'
+
+    with open(path, 'rb') as image_file:
+        img_base64 = base64.b64encode(image_file.read())
+
+    server_hostname = 'https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=eu&secret_key=%s' % (SECRET_KEY)
+    r = requests.post(server_hostname, data = img_base64)
+    json_string = json.dumps(r.json())
+    json_dict = json.loads(json_string)
+    return json_dict["results"][0]["plate"]  #return plate
