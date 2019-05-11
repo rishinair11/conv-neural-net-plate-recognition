@@ -8,7 +8,7 @@ try:
     connection = mysql.connector.connect(host='localhost',
                                          database='trafficvc',
                                          user='root',
-                                         password='')
+                                         password='password')
     if connection.is_connected():
         db_Info = connection.get_server_info()
 
