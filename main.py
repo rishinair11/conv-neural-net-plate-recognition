@@ -11,7 +11,6 @@ try:
                                          password='password')
     if connection.is_connected():
         db_Info = connection.get_server_info()
-
         while True:
             # Get the row with case id = 0  TABLE : cases
             cursor = connection.cursor()
@@ -27,16 +26,20 @@ try:
 
             if image_list != []:
                 platenumber = None
-                # Get neural network prediction
                 for image in image_list:
                     # preprocess image
                     path = '{}.jpg'.format(image[0])
                     with open(path, 'wb') as file:
                         file.write(image[1])
+
+                    # neural network returns licenceplate number
                     platenumber = Start.recognize(path)
                     print(platenumber)
-                    # delete file to save storage
+
+                    # delete image to save storage
                     os.remove(path)
+                    if platenumber == None:
+                        continue
 
                     platetuple = (platenumber,)
 
@@ -49,8 +52,8 @@ try:
                     criminalCount = 0
                     for (id) in cursor2:
                         criminalCount += 1
-                        print("Case id : ", id)
                         criminalid = id[0]
+                        print("Criminal id : ", criminalid)
 
                     if criminalCount >= 1:
                         # Update the offender's id TABLE : cases
