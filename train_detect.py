@@ -1,4 +1,4 @@
-import cv2
+# import cv2
 import numpy as np
 from keras.callbacks import CSVLogger
 from keras.layers import Convolution2D, Dense, Dropout, Flatten, MaxPooling2D  # ; To make the convolution layer for 2D images
