@@ -1,0 +1,5 @@
+{
+    "host": "localhost",
+    "hostname": "https://api.platerecognizer.com/v1/plate-reader/",
+    "token": "49f28321f3c9f5c73709969e30ac7ab9ac8af63e"
+}

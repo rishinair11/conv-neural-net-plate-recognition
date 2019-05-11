@@ -130,19 +130,35 @@ def writeLicensePlateCharsOnImage(imgOriginalScene, licPlate):
     print(licPlate.strChars)
 
 # DEV TESTING
-# if __name__ == "__main__":
-#     print(main('Correct/IBN4014.jpg'))
+if __name__ == "__main__":
+    print(main('Correct/IBN4014.jpg'))
     
 def recognize(path):
-    
-
-    SECRET_KEY = 'sk_d72bcb44e3f485e2f9601105'
-
-    with open(path, 'rb') as image_file:
-        img_base64 = base64.b64encode(image_file.read())
-
-    server_hostname = 'https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=eu&secret_key=%s' % (SECRET_KEY)
-    r = requests.post(server_hostname, data = img_base64)
-    json_string = json.dumps(r.json())
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    #Use the new datastore datastructure
+    localhost = config["hostname"]
+    token = config["token"]
+    with open(path, 'rb') as fp:
+        response = requests.post(
+            localhost,
+            files=dict(upload=fp),
+            headers={'Authorization': 'Token {}'.format(token)})
+    json_string = json.dumps(response.json())
     json_dict = json.loads(json_string)
-    return json_dict["results"][0]["plate"]  #return plate
+    return json_dict["results"][0]["plate"].upper()
+
+    
+    # SECRET_KEY = 'sk_d72bcb44e3f485e2f9601105'
+
+    # with open(path, 'rb') as image_file:
+    #     img_base64 = base64.b64encode(image_file.read())
+
+    # server_hostname = 'https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=eu&secret_key=%s' % (SECRET_KEY)
+    # r = requests.post(server_hostname, data = img_base64)
+    # json_string = json.dumps(r.json())
+    # json_dict = json.loads(json_string)
+    # if json_dict["results"] == []:
+    #     return None
+    # return json_dict["results"][0]["plate"]  #return plate
+    
