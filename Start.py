@@ -146,6 +146,8 @@ def recognize(path):
             headers={'Authorization': 'Token {}'.format(token)})
     json_string = json.dumps(response.json())
     json_dict = json.loads(json_string)
+    if json_dict["results"] == []:
+        return None
     return json_dict["results"][0]["plate"].upper()
 
     

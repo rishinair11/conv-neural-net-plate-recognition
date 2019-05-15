@@ -47,8 +47,8 @@ try:
                         plate_none_query = """ UPDATE cases
                                 SET seen = 1
                                 WHERE caseid = %s """
-                        plate_none.execute(plate_none_query, (image[0]))
-                        print("New plate found!")
+                        plate_none.execute(plate_none_query, (image[0],))
+                        print("Unable to recognize plate.")
                         continue
 
                     platetuple = (platenumber,)
