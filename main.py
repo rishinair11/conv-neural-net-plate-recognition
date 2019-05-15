@@ -48,6 +48,7 @@ try:
                                 SET seen = 1
                                 WHERE caseid = %s """
                         plate_none.execute(plate_none_query, (image[0]))
+                        print("New plate found!")
                         continue
 
                     platetuple = (platenumber,)
@@ -75,6 +76,7 @@ try:
                         cursor3 = connection.cursor()
                         query3 = "UPDATE cases SET seen=1 WHERE caseid = %s"
                         cursor3.execute(query3, (image[0],))
+                        print("New plate found!")
 
             time.sleep(5)
 
