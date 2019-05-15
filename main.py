@@ -15,7 +15,7 @@ try:
             # Get the row with case id = 0  TABLE : cases
             cursor = connection.cursor()
             query = ("SELECT caseid, reporterid, proof, licenseplatepic FROM cases "
-                     "WHERE aadharid=0")
+                     "WHERE aadharid=0 AND seen=0")
             cursor.execute(query)
 
             image_list = []
@@ -41,7 +41,13 @@ try:
 
                     # delete image to save storage
                     os.remove(path)
+
                     if platenumber == None:
+                        plate_none = connection.cursor()
+                        plate_none_query = """ UPDATE cases
+                                SET seen = 1
+                                WHERE caseid = %s """
+                        plate_none.execute(plate_none_query, (image[0]))
                         continue
 
                     platetuple = (platenumber,)
@@ -62,13 +68,18 @@ try:
                         # Update the offender's id TABLE : cases
                         cursor3 = connection.cursor()
                         query3 = """ UPDATE cases
-                                SET aadharid = %s
+                                SET aadharid = %s, seen=1
                                 WHERE caseid = %s """
                         cursor3.execute(query3, (criminalid, image[0]))
+                    else:
+                        cursor3 = connection.cursor()
+                        query3 = "UPDATE cases SET seen=1 WHERE caseid = %s"
+                        cursor3.execute(query3, (image[0],))
+
             time.sleep(5)
 
 except Error as e:
-    print("Error while connecting to MySQL", e)
+    print("MYSQL Error:", e)
 finally:
     # closing database connection.
     if(connection.is_connected()):
